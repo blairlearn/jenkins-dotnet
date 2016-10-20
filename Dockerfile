@@ -45,5 +45,15 @@ RUN mkdir warmup \
     && cd .. \
     && rm -rf warmup \
     && rm -rf /tmp/NuGetScratch
-	
+
+# Install the github-release tool.
+ENV RELEASE_TOOL_URL https://github.com/aktau/github-release/releases/download/v0.6.2/linux-amd64-github-release.tar.bz2 
+RUN curl -SL $RELEASE_TOOL_URL --output /tmp/github-release.tar.bz2
+    && mkdir -p /usr/share/github-release
+    && tar -jxf /tmp/github-release.tar.bz2
+    && cp bin/linux/amd64/github-release /usr/share/github-release/github-release
+    && ln -s /usr/share/github-release/github-release /usr/bin/github-release
+    && rm github-release.tar.bz2
+    && rm -rf bin
+
 user jenkins
